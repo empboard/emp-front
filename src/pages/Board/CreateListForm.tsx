@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useCallback, useState } from 'react'
-import { Div, Input } from '../../components'
+import { Button, Div, Input } from '../../components'
+import { v4 as uuid } from 'uuid'
 
 export type CreateListFormProps = {
   onCreateList: (uuid: string, title: string) => void
@@ -12,7 +13,7 @@ const CreateListForm: FC<CreateListFormProps> = ({ onCreateList }) => {
   }, [])
 
   const addList = useCallback(() => {
-    onCreateList('1', value)
+    onCreateList(uuid(), value)
     setValue(() => '123')
   }, [value, onCreateList])
 
@@ -23,9 +24,12 @@ const CreateListForm: FC<CreateListFormProps> = ({ onCreateList }) => {
         value={value} onChange={onChange}
         className="input-xs input-bordered input input-primary" />
       
-      <button onClick={addList} disabled={!value.length} className="ml-2 btn-primary btn-xs">
-        ADD
-      </button>
+      <Button 
+        name="ADD"
+        onClick={addList} 
+        disabled={!value.length} 
+        className="ml-2 btn-primary btn-xs" 
+      />
     </Div>
   )
 }

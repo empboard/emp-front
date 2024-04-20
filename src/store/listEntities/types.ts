@@ -1,9 +1,15 @@
 import type { Action } from 'redux'
+import type { List } from '../commonTypes'
+export * from '../commonTypes'
 
-export type State = number
+export type State = Record<string, List>
 
-export type SetTempAction = Action<'@listEntities/temp'> & {
-  payload: State
+export type AddListAction = Action<'@listEntities/add'> & {
+  payload: List
 }
 
-export type Actions = SetTempAction
+export type RemoveListAction = Action<'@listEntities/remove'> & {
+  payload: string
+}
+
+export type Actions = AddListAction | RemoveListAction

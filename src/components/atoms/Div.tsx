@@ -10,6 +10,13 @@ export type WidthHeight = {
   height?: string
 }
 
+export type MinMaxWidthHeight = {
+  minWidth?: string
+  maxWidth?: string
+  minHeight?: string
+  maxHeight?: string
+}
+
 export type LeftRightTopBottom = {
   left?: string
   right?: string
@@ -24,7 +31,8 @@ export type ReactDivProps = DetailedHTMLProps<
 
 export type DivProps = ReactDivProps &
   PropsWithChildren<WidthHeight> &
-  LeftRightTopBottom & {
+  LeftRightTopBottom &
+  MinMaxWidthHeight & {
     src?: string
   }
 
@@ -32,6 +40,7 @@ export type DivProps = ReactDivProps &
 export const Div: FC<DivProps> = ({
   width, height, src,
   left, right, top, bottom,
+  minWidth, maxWidth, minHeight, maxHeight,
   style: _style,
   className: _className,
   ...props
@@ -40,7 +49,8 @@ export const Div: FC<DivProps> = ({
     ..._style, 
     width, height, 
     backgroundImage: src && `url(${src})`,
-    left, right, top, bottom 
+    left, right, top, bottom,
+    minWidth, maxWidth, minHeight, maxHeight
   }
 
   const className = [
