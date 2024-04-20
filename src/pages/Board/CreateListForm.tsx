@@ -23,8 +23,9 @@ const CreateListForm: FC<CreateListFormProps> = ({ onCreateList }) => {
         value={value} onChange={onChange}
         className="input-xs input-bordered input input-primary" />
       
-      <button name="add" onClick={addList} disabled={!value.length}
-        className="ml-2 btn-primary btn-xs" />
+      <button onClick={addList} disabled={!value.length} className="ml-2 btn-primary btn-xs">
+        ADD
+      </button>
     </Div>
   )
 }

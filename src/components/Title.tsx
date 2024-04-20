@@ -14,11 +14,11 @@ export const Title: FC<TitleProps> = ({
   numberOfLines,
   ...props
 }) => {
-  const className = [
+  const className = makeClassName(
     'font-bold text-5xl text-center whitespace-pre-line',
     _className,
-    numberOfLines ? `line-clamp-${numberOfLines}` : '',
-  ].join(' ')
+    numberOfLines
+  )
 
   return <p {...props} className={className} />
 }
@@ -30,11 +30,11 @@ export const Subtitle: FC<SubtitleProps> = ({
   numberOfLines,
   ...props
 }) => {
-  const className = [
+  const className = makeClassName(
     'font-semibold text-3xl text-center whitespace-pre-line',
     _className,
-    numberOfLines ? `line-clamp-${numberOfLines}` : '',
-  ].join(' ')
+    numberOfLines
+  )
 
   return <p {...props} className={className} />
 }
@@ -46,11 +46,11 @@ export const Summary: FC<SummaryProps> = ({
   numberOfLines,
   ...props
 }) => {
-  const className = [
+  const className = makeClassName(
     'text-sm whitespace-pre-line',
     _className,
-    numberOfLines ? `line-clamp-${numberOfLines}` : '',
-  ].join(' ')
+    numberOfLines
+  )
 
   return <p {...props} className={className} />
 }
@@ -62,11 +62,25 @@ export const Paragraph: FC<ParagraphProps> = ({
   numberOfLines,
   ...props
 }) => {
-  const className = [
+  const className = makeClassName(
     'font-normal text-base whitespace-pre-line',
     _className,
-    numberOfLines ? `line-clamp-${numberOfLines}` : '',
-  ].join(' ')
+    numberOfLines
+  )
 
   return <p {...props} className={className} />
+}
+
+const makeClassName = (
+  setting: string,
+  _className?: string,
+  numberOfLines?: number
+) => {
+  const classNames = [
+    setting,
+    numberOfLines ? `line-clamp-${numberOfLines}` : '',
+    _className,
+  ]
+
+  return classNames.join(' ').trim()
 }
