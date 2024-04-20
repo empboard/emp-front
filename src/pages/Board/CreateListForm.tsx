@@ -7,14 +7,14 @@ export type CreateListFormProps = {
 }
 
 const CreateListForm: FC<CreateListFormProps> = ({ onCreateList }) => {
-  const [value, setValue] = useState<string>('')
+  const [value, setValue] = useState<string>(uuid())
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setValue(() => e.target.value)
   }, [])
 
   const addList = useCallback(() => {
     onCreateList(uuid(), value)
-    setValue(() => '123')
+    setValue(() => uuid())
   }, [value, onCreateList])
 
   // prettier-ignore

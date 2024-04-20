@@ -11,7 +11,6 @@ const App = () => {
     <ReduxProvider store={store}>
       <DndProvider backend={HTML5Backend}>
         <Board />
-        <p className="text-5xl text-red-500">123</p>
       </DndProvider>
     </ReduxProvider>
   )

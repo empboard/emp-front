@@ -14,9 +14,14 @@ export type ButtonProps = ReactButtonProps & {}
 
 export const Button: FC<PropsWithChildren<ButtonProps>> = ({
   className: _className,
+  name,
   ...buttonProps
 }) => {
   const className = ['btn', _className].join(' ')
 
-  return <button {...buttonProps} className={className} />
+  return (
+    <button {...buttonProps} className={className}>
+      {name}
+    </button>
+  )
 }

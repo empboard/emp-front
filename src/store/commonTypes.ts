@@ -1,3 +1,5 @@
+import { ICard } from '../components'
+
 export type UUID = string
 
 export type List = {
@@ -5,7 +7,7 @@ export type List = {
   title: string
 }
 
-export type Card = number
+export type Card = ICard
 
 export type CardidListid = {
   cardid: UUID

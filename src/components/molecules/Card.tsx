@@ -21,12 +21,13 @@ export type ICard = {
   relativeDate: string | null
 }
 
-export type UserCardProps = {
+export type CardProps = {
   card: ICard
+  onClick?: () => void
   onRemove?: () => void
 }
 
-export const Card: FC<UserCardProps> = ({ card, onRemove }) => {
+export const Card: FC<CardProps> = ({ card, onClick, onRemove }) => {
   const { image, writer } = card
   const { avatar, name, jobTitle } = writer
 
@@ -34,6 +35,7 @@ export const Card: FC<UserCardProps> = ({ card, onRemove }) => {
     <Div
       className="m-2 overflow-hidden border shadow-lg rounded-xl"
       width="10rem"
+      onClick={onClick}
     >
       <Div src={image} className="relative h-20">
         <Button

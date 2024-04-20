@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useLists } from '../../hooks'
 import { Div, Title } from '../../components'
 import CreateListForm from './CreateListForm'
-import BoardList from '../BoardList'
+import BoardList from './BoardList'
 
 const Board = () => {
   const { lists, onRemoveList, onCreateList } = useLists()

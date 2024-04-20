@@ -55,7 +55,7 @@ export const Div: FC<DivProps> = ({
 
   const className = [
     'box-border',
-    src && 'bg-gray-300',
+    src ? 'bg-gray-300' : '',
     _className
   ].join(' ')
 
