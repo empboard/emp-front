@@ -1,5 +1,5 @@
 import { useMemo, type FC } from 'react'
-import { Button, Card, Div, Paragraph } from '../../components'
+import { Button, Card, CardDroppable, Div, Paragraph } from '../../components'
 import { useCards } from '../../hooks'
 import { ListDraggable } from '../../components'
 import type { List } from '../../store/commonTypes'
@@ -25,8 +25,14 @@ const BoardList: FC<BoardListProps> = ({
 
   const children = useMemo(
     () =>
-      cards.map((card) => (
-        <Card key={card.uuid} card={card} onRemove={onRemoveCard(card.uuid)} />
+      cards.map((card, index) => (
+        <Card
+          key={card.uuid}
+          card={card}
+          onRemove={onRemoveCard(card.uuid)}
+          draggableId={card.uuid}
+          index={index}
+        />
       )),
     [cards, onRemoveCard]
   )
@@ -62,7 +68,7 @@ const BoardList: FC<BoardListProps> = ({
             </Div>
           </Div>
         </Div>
-        <Div className="flex p-2">{children}</Div>
+        <CardDroppable droppableId={list.uuid}>{children}</CardDroppable>
       </Div>
     </ListDraggable>
   )

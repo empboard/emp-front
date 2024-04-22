@@ -52,9 +52,7 @@ export const Div: FC<DivProps> = ({
     minWidth, maxWidth, minHeight, maxHeight,
     backgroundImage: src && `url(${src})`
   }
-
-  console.log(styles)
-
+  
   const className = [
     'box-border',
     src ? 'bg-gray-300 bg-contain' : '',
