@@ -5,18 +5,20 @@ import CreateListForm from './CreateListForm'
 import BoardList from './BoardList'
 
 const Board = () => {
-  const { lists, onRemoveList, onCreateList } = useLists()
+  const { lists, onRemoveList, onCreateList, onMoveList } = useLists()
 
   const children = useMemo(
     () =>
-      lists?.map((list) => (
+      lists?.map((list, index) => (
         <BoardList
           key={list.uuid}
           list={list}
           onRemoveList={onRemoveList(list.uuid)}
+          index={index}
+          onMoveList={onMoveList}
         />
       )),
-    [lists, onRemoveList]
+    [lists, onRemoveList, onMoveList]
   )
 
   return (

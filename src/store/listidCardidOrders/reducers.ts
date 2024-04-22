@@ -28,6 +28,16 @@ export const reducer = (state: T.State = initialState, action: T.Actions) => {
         [action.payload.listid]: [...cardids, action.payload.cardid],
       }
     }
+
+    case '@listidCardids/removeCardid': {
+      const cardids = state[action.payload.listid]
+      return {
+        ...state,
+        [action.payload.listid]: cardids.filter(
+          (id) => id !== action.payload.cardid
+        ),
+      }
+    }
   }
 
   return state

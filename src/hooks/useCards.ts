@@ -9,18 +9,20 @@ import * as LC from '../store/listidCardidOrders'
 
 export const useCards = (listid: UUID) => {
   const dispatch = useDispatch()
-  const cards = useSelector<AppState, Card[]>((state) =>
-    state.listidCardidOrders[listid]?.map((uuid) => state.cardEntities[uuid])
+
+  const cards = useSelector<AppState, Card[]>(
+    ({ cardEntities, listidCardidOrders }) =>
+      listidCardidOrders[listid].map((uuid) => cardEntities[uuid])
   )
 
   const onPrependCard = useCallback(() => {
-    const card = CARD
+    const card = CARD()
     dispatch(C.addCard(card))
     dispatch(LC.prependCardidToListid({ listid, cardid: card.uuid }))
   }, [dispatch, listid])
 
   const onAppendCard = useCallback(() => {
-    const card = CARD
+    const card = CARD()
     dispatch(C.addCard(card))
     dispatch(LC.appendCardidToListid({ listid, cardid: card.uuid }))
   }, [dispatch, listid])
@@ -36,20 +38,18 @@ export const useCards = (listid: UUID) => {
   return { cards, onPrependCard, onAppendCard, onRemoveCard }
 }
 
-const CARD: Card = {
+const CARD = () => ({
   uuid: uuid(),
   writer: {
     uuid: uuid(),
     name: 'seungsu hwang',
     jobTitle: 'developer',
     email: 'h970126@gmail.com',
-    avatar:
-      'https://seungsuhwang-portfolio.s3.ap-northeast-2.amazonaws.com/h970126%40gmail+(01-03).jpg',
+    avatar: 'https://picsum.photos/200',
   },
-  image:
-    'https://seungsuhwang-portfolio.s3.ap-northeast-2.amazonaws.com/h970126%40gmail+(02-01).jpg',
+  image: 'https://picsum.photos/200/300',
   title: 'title',
   paragraphs: '123123123',
   dayMonthYearDate: '2024/04/21',
   relativeDate: '오늘',
-}
+})

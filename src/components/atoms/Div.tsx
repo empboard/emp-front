@@ -45,19 +45,21 @@ export const Div: FC<DivProps> = ({
   className: _className,
   ...props
 }) => {
-  const style = { 
+  const styles = { 
     ..._style, 
     width, height, 
-    backgroundImage: src && `url(${src})`,
     left, right, top, bottom,
-    minWidth, maxWidth, minHeight, maxHeight
+    minWidth, maxWidth, minHeight, maxHeight,
+    backgroundImage: src && `url(${src})`
   }
+
+  console.log(styles)
 
   const className = [
     'box-border',
-    src ? 'bg-gray-300' : '',
+    src ? 'bg-gray-300 bg-contain' : '',
     _className
-  ].join(' ')
+  ].join(' ').trim()
 
-  return <div {...props} style={style} className={className} />
+  return <div {...props} className={className} style={styles} />
 }
