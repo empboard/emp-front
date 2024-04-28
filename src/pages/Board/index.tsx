@@ -26,11 +26,9 @@ const Board = () => {
   return (
     <section className="mt-4">
       <Title>Board</Title>
+      <CreateListForm onCreateList={onCreateList} />
       <DragDropContext onDragEnd={onDragEnd}>
-        <Div className="mt-4">
-          {children}
-          <CreateListForm onCreateList={onCreateList} />
-        </Div>
+        <Div className="mt-4">{children}</Div>
       </DragDropContext>
     </section>
   )

@@ -1,22 +1,28 @@
 import { useMemo, type FC } from 'react'
-import { Button, Card, CardDroppable, Div, Paragraph } from '../../components'
 import { useCards } from '../../hooks'
-import { ListDraggable } from '../../components'
 import type { List } from '../../store/commonTypes'
-import type { MoveFunc } from '../../components'
+import {
+  Button,
+  Card,
+  CardDroppable,
+  Div,
+  Paragraph,
+  ListDraggable,
+  type MoveFunc,
+} from '../../components'
 
 export type BoardListProps = {
   list: List
-  onRemoveList?: () => void
   index: number
   onMoveList: MoveFunc
+  onRemoveList?: () => void
 }
 
 const BoardList: FC<BoardListProps> = ({
   list,
-  onRemoveList,
   index,
   onMoveList,
+  onRemoveList,
   ...props
 }) => {
   const { cards, onPrependCard, onAppendCard, onRemoveCard } = useCards(

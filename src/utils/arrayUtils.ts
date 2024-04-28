@@ -16,7 +16,7 @@ export const insertItemAtIndexInArray = <T>(
   insertIndex: number,
   item: T
 ) => {
-  const before = array.filter((item, index) => index < insertIndex)
-  const after = array.filter((item, index) => index >= insertIndex)
+  const before = array.filter((_, index) => index < insertIndex)
+  const after = array.filter((_, index) => index >= insertIndex)
   return [...before, item, ...after]
 }

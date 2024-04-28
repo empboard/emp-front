@@ -1,7 +1,7 @@
 import { useRef, type FC } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import type { Identifier } from 'dnd-core'
-import { Div, type DivProps } from '..'
+import { type DivProps } from '..'
 
 export type MoveFunc = (dragIndex: number, hoverIndex: number) => void
 
