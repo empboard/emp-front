@@ -1,13 +1,24 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { DragDropContext } from 'react-beautiful-dnd'
 import { useLists } from '../../hooks'
 import { Div, Title } from '../../components'
 import CreateListForm from './CreateListForm'
 import BoardList from './BoardList'
 
+import { useAppDispatch, useAppSelector, getUserInfo } from '../../store'
+
 const Board = () => {
   const { lists, onRemoveList, onCreateList, onMoveList, onDragEnd } =
     useLists()
+
+  const dispatch = useAppDispatch()
+  const users = useAppSelector((state) => state.user.users)
+
+  useEffect(() => {
+    dispatch(getUserInfo())
+  }, [dispatch])
+
+  console.log(users)
 
   const children = useMemo(
     () =>

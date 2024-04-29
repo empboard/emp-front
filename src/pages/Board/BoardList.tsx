@@ -1,6 +1,6 @@
 import { useMemo, type FC } from 'react'
 import { useCards } from '../../hooks'
-import type { List } from '../../store/commonTypes'
+import type { List } from '../../store/types'
 import {
   Button,
   Card,

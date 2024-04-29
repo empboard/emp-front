@@ -1,36 +1,36 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { AppState } from '../store/AppState'
-import { List } from '../store/commonTypes'
 import { useCallback } from 'react'
-
-import * as U from '../utils'
-import * as L from '../store/listEntities'
-import * as LO from '../store/listidOrders'
-import * as LC from '../store/listidCardidOrders'
-import * as C from '../store/cardEntities'
 import { DropResult } from 'react-beautiful-dnd'
 
-export const useLists = () => {
-  const dispatch = useDispatch()
+import {
+  useAppDispatch,
+  useAppSelector,
+  cardEntityAction as CA,
+  listidCardidOrdersAction as LCA,
+  listEntityAction as LA,
+  listIdOrdersAction as LOA,
+} from '../store'
 
-  const lists = useSelector<AppState, List[]>((state) =>
-    state.listidOrders?.map((uuid) => state.listEntities[uuid])
+import * as U from '../utils'
+
+export const useLists = () => {
+  const dispatch = useAppDispatch()
+
+  const lists = useAppSelector(({ listidOrders, listEntities }) =>
+    listidOrders.map((uuid) => listEntities[uuid])
   )
 
-  const listidCardidOrders = useSelector<AppState, LC.State>(
+  const listidCardidOrders = useAppSelector(
     ({ listidCardidOrders }) => listidCardidOrders
   )
 
-  const listidOrders = useSelector<AppState, LO.State>(
-    ({ listidOrders }) => listidOrders
-  )
+  const listidOrders = useAppSelector(({ listidOrders }) => listidOrders)
 
   const onCreateList = useCallback(
     (uuid: string, title: string) => {
       const list = { uuid, title }
-      dispatch(LO.addListidToOrders(uuid))
-      dispatch(L.addList(list))
-      dispatch(LC.setListidCardids({ listid: list.uuid, cardids: [] }))
+      dispatch(LOA.add(uuid))
+      dispatch(LA.add(list))
+      dispatch(LCA.set({ listid: list.uuid, cardids: [] }))
     },
     [dispatch]
   )
@@ -38,12 +38,12 @@ export const useLists = () => {
   const onRemoveList = useCallback(
     (listid: string) => () => {
       listidCardidOrders[listid].forEach((cardid) => {
-        dispatch(C.removeCard(cardid))
+        dispatch(CA.remove(cardid))
       })
 
-      dispatch(LC.removeListid(listid))
-      dispatch(L.removeList(listid))
-      dispatch(LO.removeListidFromOrders(listid))
+      dispatch(LCA.remove(listid))
+      dispatch(LOA.remove(listid))
+      dispatch(LA.remove(listid))
     },
     [dispatch, listidCardidOrders]
   )
@@ -58,15 +58,13 @@ export const useLists = () => {
           : item
       )
 
-      dispatch(LO.setListidOrders(newOrders))
+      dispatch(LOA.set(newOrders))
     },
     [dispatch, listidOrders]
   )
 
   // prettier-ignore
   const onDragEnd = useCallback((result: DropResult) => {
-    console.log('onDragEnd: ', result)
-
     // source는 항상 값이 있지만, destination은 undefined일 수 있다.
     const destinationListid = result.destination?.droppableId
     const destinationCardIndex = result.destination?.index
@@ -83,7 +81,7 @@ export const useLists = () => {
       const cardidOrders = listidCardidOrders[destinationListid]
 
       dispatch(
-        LC.setListidCardids({
+        LCA.set({
           listid: destinationListid,
           cardids: U.swapItemsInArray(
             cardidOrders,
@@ -98,7 +96,7 @@ export const useLists = () => {
       // 2. 카드를 다른 목록으로 옮기는 경우 현재 목록에서 삭제한 후, 목적지에 추가해준다.
       const sourceCardidOrders = listidCardidOrders[sourceListid]
       dispatch(
-        LC.setListidCardids({
+        LCA.set({
           listid: sourceListid,
           cardids: U.removeItemAtIndexInArray(
             sourceCardidOrders,
@@ -109,7 +107,7 @@ export const useLists = () => {
 
       const destinationCardidOrders = listidCardidOrders[destinationListid]
       dispatch(
-        LC.setListidCardids({
+        LCA.set({
           listid: destinationListid,
           cardids: U.insertItemAtIndexInArray(
             destinationCardidOrders,

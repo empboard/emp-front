@@ -1,36 +1,37 @@
 import { useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import type { Card, UUID } from '../store/commonTypes'
-import { AppState } from '../store/AppState'
 import { v4 as uuid } from 'uuid'
 
-import * as C from '../store/cardEntities'
-import * as LC from '../store/listidCardidOrders'
+import {
+  useAppDispatch,
+  useAppSelector,
+  UUID,
+  cardEntityAction as CA,
+  listidCardidOrdersAction as LCA,
+} from '../store'
 
 export const useCards = (listid: UUID) => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-  const cards = useSelector<AppState, Card[]>(
-    ({ cardEntities, listidCardidOrders }) =>
-      listidCardidOrders[listid].map((uuid) => cardEntities[uuid])
+  const cards = useAppSelector(({ cardEntities, listidCardidOrders }) =>
+    listidCardidOrders[listid].map((uuid) => cardEntities[uuid])
   )
 
   const onPrependCard = useCallback(() => {
     const card = CARD()
-    dispatch(C.addCard(card))
-    dispatch(LC.prependCardidToListid({ listid, cardid: card.uuid }))
+    dispatch(CA.add(card))
+    dispatch(LCA.prependCardid({ listid, cardid: card.uuid }))
   }, [dispatch, listid])
 
   const onAppendCard = useCallback(() => {
     const card = CARD()
-    dispatch(C.addCard(card))
-    dispatch(LC.appendCardidToListid({ listid, cardid: card.uuid }))
+    dispatch(CA.add(card))
+    dispatch(LCA.appendCardid({ listid, cardid: card.uuid }))
   }, [dispatch, listid])
 
   const onRemoveCard = useCallback(
     (uuid: UUID) => () => {
-      dispatch(C.removeCard(uuid))
-      dispatch(LC.removeCardidFromListid({ listid, cardid: uuid }))
+      dispatch(CA.remove(uuid))
+      dispatch(LCA.remove({ listid, cardid: uuid }))
     },
     [dispatch, listid]
   )
