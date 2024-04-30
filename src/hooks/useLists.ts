@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { DropResult } from 'react-beautiful-dnd'
-
+import * as U from '../utils'
 import {
   useAppDispatch,
   useAppSelector,
@@ -9,8 +9,6 @@ import {
   listEntityAction as LA,
   listIdOrdersAction as LOA,
 } from '../store'
-
-import * as U from '../utils'
 
 export const useLists = () => {
   const dispatch = useAppDispatch()

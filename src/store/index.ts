@@ -7,14 +7,14 @@ import {
   type TypedUseSelectorHook,
 } from 'react-redux'
 
-import * as L from './listEntitiesSlice'
-import * as LO from './listidOrdersSlice'
-import * as C from './cardEntitiesSlice'
-import * as LC from './listidCardidOrdersSlice'
+import * as L from './listEntities/slice'
+import * as LO from './listidOrders/slice'
+import * as C from './cardEntities/slice'
+import * as LC from './listidCardidOrders/slice'
 import * as U from './user/slice'
 
 export type AppState = {
-  listEntities: L.ListEntityState
+  listEntities: L.ListEntitiesState
   listidOrders: LO.ListidOrdersState
   listidCardidOrders: LC.ListidCardidOrdersState
   cardEntities: C.CardEntityState
@@ -41,8 +41,8 @@ export const useAppDispatch: () => AppDispatch = useDispatch
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 export * from './user/actions'
-export * from './cardEntitiesSlice'
-export * from './listidOrdersSlice'
-export * from './listidCardidOrdersSlice'
-export * from './listEntitiesSlice'
+export * from './cardEntities/slice'
+export * from './listidOrders/slice'
+export * from './listidCardidOrders/slice'
+export * from './listEntities/slice'
 export * from './types'

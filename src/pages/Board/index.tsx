@@ -18,8 +18,6 @@ const Board = () => {
     dispatch(getUserInfo())
   }, [dispatch])
 
-  console.log(users)
-
   const children = useMemo(
     () =>
       lists?.map((list, index) => (

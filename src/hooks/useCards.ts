@@ -12,6 +12,7 @@ import {
 export const useCards = (listid: UUID) => {
   const dispatch = useAppDispatch()
 
+  /* 리스트 내 모든 카드 가져오기 */
   const cards = useAppSelector(({ cardEntities, listidCardidOrders }) =>
     listidCardidOrders[listid].map((uuid) => cardEntities[uuid])
   )
@@ -31,7 +32,7 @@ export const useCards = (listid: UUID) => {
   const onRemoveCard = useCallback(
     (uuid: UUID) => () => {
       dispatch(CA.remove(uuid))
-      dispatch(LCA.remove({ listid, cardid: uuid }))
+      dispatch(LCA.removeCardid({ listid, cardid: uuid }))
     },
     [dispatch, listid]
   )
