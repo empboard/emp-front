@@ -15,15 +15,6 @@ const ListidCardidOrdersSlice = createSlice({
       delete state[action.payload]
     },
 
-    prependCardid(
-      state: T.ListidCardidOrdersState,
-      action: T.PrependCardidToListidAction
-    ) {
-      state[action.payload.listid] = [action.payload.cardid].concat(
-        state[action.payload.listid]
-      )
-    },
-
     appendCardid(
       state: T.ListidCardidOrdersState,
       action: T.AppendCardidToListidAction
@@ -35,9 +26,12 @@ const ListidCardidOrdersSlice = createSlice({
       state: T.ListidCardidOrdersState,
       action: T.RemoveCardidFromListidAction
     ) {
-      state[action.payload.listid].filter(
-        (uuid) => uuid !== action.payload.cardid
+      const list = state[action.payload.listid]
+      const removeIndex = list.findIndex(
+        (uuid) => uuid === action.payload.cardid
       )
+
+      list.splice(removeIndex, 1)
     },
   },
 })

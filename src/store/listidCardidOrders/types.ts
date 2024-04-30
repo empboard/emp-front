@@ -10,10 +10,6 @@ export type RemoveListidAction = {
   payload: T.UUID
 }
 
-export type PrependCardidToListidAction = {
-  payload: T.ListidCardid
-}
-
 export type AppendCardidToListidAction = {
   payload: T.ListidCardid
 }

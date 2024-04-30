@@ -43,8 +43,8 @@ export const Card: FC<CardProps> = ({
     <CardDraggable draggableId={draggableId} index={index}>
       <Div
         className="m-2 overflow-hidden border shadow-lg rounded-xl"
-        width="500px"
-        height="300px"
+        width="350px"
+        height="200px"
         onClick={onClick}
       >
         <Suspense fallback={<Overlay />}>

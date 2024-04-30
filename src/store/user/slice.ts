@@ -9,14 +9,14 @@ export type User = {
 }
 
 export type UserState = {
-  users: User[]
+  user: User | null
   loading: boolean
   error: boolean
   errorMessage: string | null
 }
 
 const initialState: UserState = {
-  users: [],
+  user: null,
   loading: false,
   error: false,
   errorMessage: null,
@@ -35,11 +35,12 @@ const UserSlice = createSlice({
       })
       .addCase(getUserInfo.fulfilled, (state, action) => {
         state.loading = false
-        state.users = action.payload
+        state.user = action.payload
       })
       .addCase(getUserInfo.rejected, (state, action) => {
         state.loading = false
         state.error = true
+        state.user = null
         state.errorMessage = action.error.message || 'Something went wrong'
       })
   },

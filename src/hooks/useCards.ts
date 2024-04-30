@@ -17,12 +17,6 @@ export const useCards = (listid: UUID) => {
     listidCardidOrders[listid].map((uuid) => cardEntities[uuid])
   )
 
-  const onPrependCard = useCallback(() => {
-    const card = CARD()
-    dispatch(CA.add(card))
-    dispatch(LCA.prependCardid({ listid, cardid: card.uuid }))
-  }, [dispatch, listid])
-
   const onAppendCard = useCallback(() => {
     const card = CARD()
     dispatch(CA.add(card))
@@ -37,7 +31,7 @@ export const useCards = (listid: UUID) => {
     [dispatch, listid]
   )
 
-  return { cards, onPrependCard, onAppendCard, onRemoveCard }
+  return { cards, onAppendCard, onRemoveCard }
 }
 
 const CARD = () => ({
