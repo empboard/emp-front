@@ -1,4 +1,4 @@
-import { useMemo, type FC } from 'react'
+import { useCallback, useMemo, type FC } from 'react'
 import { useCards } from '../../hooks'
 import type { List } from '../../store/types'
 import {
@@ -11,8 +11,9 @@ import {
   type MoveFunc,
 } from '../../components'
 import { IoMdAdd, IoMdRemove } from 'react-icons/io'
+import { useNavigate } from 'react-router-dom'
 
-export type BoardListProps = {
+type BoardListProps = {
   list: List
   index: number
   onMoveList: MoveFunc
@@ -28,18 +29,27 @@ const BoardList: FC<BoardListProps> = ({
 }) => {
   const { cards, onAppendCard, onRemoveCard } = useCards(list.uuid)
 
+  const navigate = useNavigate()
+  const cardClicked = useCallback(
+    (cardid: string) => () => {
+      navigate(`/board/card/${cardid}`)
+    },
+    [navigate]
+  )
+
   const children = useMemo(
     () =>
-      cards?.map((card, index) => (
+      cards.map((card, index) => (
         <Card
           key={card.uuid}
           card={card}
           onRemove={onRemoveCard(card.uuid)}
           draggableId={card.uuid}
           index={index}
+          onClick={cardClicked(card.uuid)}
         />
       )),
-    [cards, onRemoveCard]
+    [cards, onRemoveCard, cardClicked]
   )
 
   return (
@@ -51,7 +61,7 @@ const BoardList: FC<BoardListProps> = ({
         maxWidth="400px"
       >
         <Div className="relative">
-          <Div className="flex flex-row absolute right-0 top-0">
+          <Div className="absolute top-0 right-0 flex flex-row">
             <IconButton
               onClick={onAppendCard}
               className="text-gray-500 hover:text-[#205081]"
@@ -65,7 +75,7 @@ const BoardList: FC<BoardListProps> = ({
               <IoMdRemove />
             </IconButton>
           </Div>
-          <Subtitle className="text-2xl p-4">{list.title}</Subtitle>
+          <Subtitle className="p-4 text-2xl">{list.title}</Subtitle>
         </Div>
 
         <hr className="border-2" />

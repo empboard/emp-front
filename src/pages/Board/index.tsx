@@ -1,22 +1,13 @@
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { DragDropContext } from 'react-beautiful-dnd'
 import { useLists } from '../../hooks'
 import { Div, Subtitle } from '../../components'
 import CreateListForm from './CreateListForm'
 import BoardList from './BoardList'
 
-import { useAppDispatch, useAppSelector, getUserInfo } from '../../store'
-
 const Board = () => {
   const { lists, onRemoveList, onCreateList, onMoveList, onDragEnd } =
     useLists()
-
-  const dispatch = useAppDispatch()
-  const user = useAppSelector((state) => state.user.user)
-
-  useEffect(() => {
-    dispatch(getUserInfo())
-  }, [dispatch])
 
   const children = useMemo(
     () =>
@@ -33,9 +24,9 @@ const Board = () => {
   )
 
   return (
-    <section className="flex flex-col gap-14 mx-12 my-12 min-h-screen">
+    <section className="flex flex-col min-h-screen mx-12 my-12 gap-14">
       <Div>
-        <Subtitle>{user?.jobTitle}</Subtitle>
+        <Subtitle>TEST</Subtitle>
         <CreateListForm onCreateList={onCreateList} />
       </Div>
 
