@@ -2,21 +2,21 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { createAsyncSlice } from '../createAsyncSlice'
 import axios, { HttpStatusCode } from 'axios'
 
-export type User = {
+export type UserState = {
   userId: number
   email: string
   jobTitle: string
   avatar: string
 }
 
-const initialState: User = {
+const initialState: UserState = {
   userId: 0,
   email: '',
   jobTitle: '',
   avatar: '',
 }
 
-export const getUserInfo = createAsyncThunk<User, void>(
+export const getUserInfo = createAsyncThunk<UserState, void>(
   '@user/getUserInfo',
   async () => {
     const response = await axios.get(
@@ -30,7 +30,7 @@ export const getUserInfo = createAsyncThunk<User, void>(
   }
 )
 
-const UserSlice = createAsyncSlice('user', initialState, getUserInfo)
+const userSlice = createAsyncSlice('user', initialState, getUserInfo)
 
-export const userAction = UserSlice.actions
-export const userReducer = UserSlice.reducer
+export const userAction = userSlice.actions
+export const userReducer = userSlice.reducer

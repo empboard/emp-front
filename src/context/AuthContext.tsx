@@ -1,6 +1,25 @@
-import { useCallback, useState, createContext } from 'react'
-import type { FC, PropsWithChildren } from 'react'
-import type { LoggedUser, Callback, ContextType } from './types'
+import {
+  type FC,
+  type PropsWithChildren,
+  createContext,
+  useState,
+  useCallback,
+  useContext,
+} from 'react'
+
+export type LoggedUser = {
+  email: string
+  password: string
+}
+
+type Callback = () => void
+
+type ContextType = {
+  loggedUser?: LoggedUser
+  signup: (email: string, password: string, callback?: Callback) => void
+  login: (email: string, password: string, callback?: Callback) => void
+  logout: (callback?: Callback) => void
+}
 
 export const AuthContext = createContext<ContextType>({
   signup: (email: string, password: string, callback?: Callback) => {},
@@ -38,12 +57,11 @@ export const AuthProvider: FC<PropsWithChildren<AuthProviderProps>> = ({
     callback && callback()
   }, [])
 
-  const value = {
-    loggedUser,
-    signup,
-    login,
-    logout,
-  }
+  const value = { loggedUser, signup, login, logout }
 
   return <AuthContext.Provider value={value} children={children} />
+}
+
+export const useAuth = () => {
+  return useContext(AuthContext)
 }

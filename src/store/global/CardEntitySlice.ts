@@ -1,17 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit'
 import * as T from './types'
 
-const initialState: T.CardEntityState = {}
+export type CardEntityState = Record<T.UUID, T.Card>
+
+export type AddCardAction = {
+  payload: T.Card
+}
+
+export type RemoveCardAction = {
+  payload: T.UUID
+}
+
+const initialState: CardEntityState = {}
 
 const CardEntitySlice = createSlice({
   name: '@cardEntity',
   initialState,
   reducers: {
-    add(state: T.CardEntityState, action: T.AddCardAction) {
+    add(state: CardEntityState, action: AddCardAction) {
       state[action.payload.uuid] = action.payload
     },
 
-    remove(state: T.CardEntityState, action: T.RemoveCardAction) {
+    remove(state: CardEntityState, action: RemoveCardAction) {
       delete state[action.payload]
     },
   },
@@ -19,4 +29,3 @@ const CardEntitySlice = createSlice({
 
 export const cardEntityAction = CardEntitySlice.actions
 export const cardEntityReducer = CardEntitySlice.reducer
-export * from './types'

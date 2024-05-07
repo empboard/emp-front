@@ -20,7 +20,9 @@ const Card = () => {
 
   const [card, setCard] = useState<CardType | null>(null)
   const { cardid } = params
-  const cardEntities = useAppSelector(({ cardEntities }) => cardEntities)
+  const cardEntities = useAppSelector(
+    ({ globalReducers }) => globalReducers.cardEntities
+  )
 
   useEffect(() => {
     if (!cardEntities || !cardid) return
@@ -36,7 +38,6 @@ const Card = () => {
         <p>
           from: {searchParams.get('from')}, to: {searchParams.get('to')}
         </p>
-        <p></p>
         <Button
           name="GO BACK"
           onClick={goBack}

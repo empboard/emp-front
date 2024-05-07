@@ -1,32 +1,28 @@
-import { combineReducers } from 'redux'
-import { configureStore } from '@reduxjs/toolkit'
 import logger from 'redux-logger'
+import { combineSlices, configureStore } from '@reduxjs/toolkit'
 import {
   useDispatch,
   useSelector,
   type TypedUseSelectorHook,
 } from 'react-redux'
 
-import * as L from './listEntities/slice'
-import * as LO from './listidOrders/slice'
-import * as C from './cardEntities/slice'
-import * as LC from './listidCardidOrders/slice'
-import * as U from './api/user/userSlice'
+import { globalReducers } from './global'
+import { apiReducers } from './api'
+import * as GLOBAL from './global'
+import * as API from './api'
 
 export type AppState = {
-  listEntities: L.ListEntitiesState
-  listidOrders: LO.ListidOrdersState
-  listidCardidOrders: LC.ListidCardidOrdersState
-  cardEntities: C.CardEntityState
-  user: U.UserState
+  listEntities: GLOBAL.ListEntitiesState
+  listidOrders: GLOBAL.ListidOrderState
+  listidCardidOrders: GLOBAL.ListidCardidOrdersState
+  cardEntities: GLOBAL.CardEntityState
+  user: API.UserState
+  customer: API.CustomerCommentState
 }
 
-const rootReducer = combineReducers({
-  listEntities: L.listEntityReducer,
-  listidOrders: LO.listIdOrdersReducer,
-  listidCardidOrders: LC.listidCardidOrdersReducer,
-  cardEntities: C.cardEntityReducer,
-  user: U.userReducer,
+const rootReducer = combineSlices({
+  globalReducers,
+  apiReducers,
 })
 
 export const store = configureStore({
@@ -40,10 +36,5 @@ export type AppDispatch = typeof store.dispatch
 export const useAppDispatch: () => AppDispatch = useDispatch
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
-export * from './api/user/userSlice'
-export * from './api/createAsyncSlice'
-export * from './cardEntities/slice'
-export * from './listidOrders/slice'
-export * from './listidCardidOrders/slice'
-export * from './listEntities/slice'
-export * from './types'
+export * from './global'
+export * from './api'

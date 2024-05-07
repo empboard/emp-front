@@ -1,4 +1,4 @@
-import { ICard } from '../components'
+import { ICard } from '../../components'
 
 export type UUID = string
 

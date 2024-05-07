@@ -6,15 +6,17 @@ import {
   useAppSelector,
   UUID,
   cardEntityAction as CA,
-  listidCardidOrdersAction as LCA,
+  listCardOrderAction as LCA,
 } from '../store'
 
 export const useCards = (listid: UUID) => {
   const dispatch = useAppDispatch()
 
   /* 리스트 내 모든 카드 가져오기 */
-  const cards = useAppSelector(({ cardEntities, listidCardidOrders }) =>
-    listidCardidOrders[listid].map((uuid) => cardEntities[uuid])
+  const cards = useAppSelector(({ globalReducers }) =>
+    globalReducers.listCardOrder[listid].map(
+      (uuid) => globalReducers.cardEntities[uuid]
+    )
   )
 
   const onAppendCard = useCallback(() => {

@@ -27,6 +27,7 @@ export const createAsyncSlice = <T, ThunkArg, ThunkConfig extends { state: T }>(
         .addCase(asyncThunk.pending, (state) => {
           state.isLoading = true
           state.isError = false
+          state.isSuccess = false
           state.errorMessage = null
         })
         .addCase(asyncThunk.fulfilled, (state, action: PayloadAction<T>) => {
@@ -35,10 +36,12 @@ export const createAsyncSlice = <T, ThunkArg, ThunkConfig extends { state: T }>(
           }
 
           state.isLoading = false
+          state.isError = false
           state.isSuccess = true
         })
-        .addCase(asyncThunk.rejected, (state, action) => {
+        .addCase(asyncThunk.rejected, (state, _) => {
           state.isLoading = false
+          state.isSuccess = false
           state.isError = true
           state.errorMessage = 'Something went wrong'
         })

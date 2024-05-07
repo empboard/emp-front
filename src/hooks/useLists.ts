@@ -5,7 +5,7 @@ import {
   useAppDispatch,
   useAppSelector,
   cardEntityAction as CA,
-  listidCardidOrdersAction as LCA,
+  listCardOrderAction as LCA,
   listEntityAction as LA,
   listIdOrdersAction as LOA,
 } from '../store'
@@ -13,15 +13,17 @@ import {
 export const useLists = () => {
   const dispatch = useAppDispatch()
 
-  const lists = useAppSelector(({ listidOrders, listEntities }) =>
-    listidOrders.map((uuid) => listEntities[uuid])
+  const lists = useAppSelector(({ globalReducers }) =>
+    globalReducers.listidOrders.map((uuid) => globalReducers.listEntities[uuid])
   )
 
-  const listidCardidOrders = useAppSelector(
-    ({ listidCardidOrders }) => listidCardidOrders
+  const listCardOrder = useAppSelector(
+    ({ globalReducers }) => globalReducers.listCardOrder
   )
 
-  const listidOrders = useAppSelector(({ listidOrders }) => listidOrders)
+  const listidOrders = useAppSelector(
+    ({ globalReducers }) => globalReducers.listidOrders
+  )
 
   const onCreateList = useCallback(
     (uuid: string, title: string) => {
@@ -35,7 +37,7 @@ export const useLists = () => {
 
   const onRemoveList = useCallback(
     (listid: string) => () => {
-      listidCardidOrders[listid].forEach((cardid) => {
+      listCardOrder[listid].forEach((cardid) => {
         dispatch(CA.remove(cardid))
       })
 
@@ -43,7 +45,7 @@ export const useLists = () => {
       dispatch(LOA.remove(listid))
       dispatch(LA.remove(listid))
     },
-    [dispatch, listidCardidOrders]
+    [dispatch, listCardOrder]
   )
 
   const onMoveList = useCallback(
@@ -76,7 +78,7 @@ export const useLists = () => {
     const sourceCardIndex = result.source.index
 
     if (destinationListid === sourceListid) {
-      const cardidOrders = listidCardidOrders[destinationListid]
+      const cardidOrders = listCardOrder[destinationListid]
 
       dispatch(
         LCA.set({
@@ -92,7 +94,7 @@ export const useLists = () => {
     
     else {
       // 2. 카드를 다른 목록으로 옮기는 경우 현재 목록에서 삭제한 후, 목적지에 추가해준다.
-      const sourceCardidOrders = listidCardidOrders[sourceListid]
+      const sourceCardidOrders = listCardOrder[sourceListid]
       dispatch(
         LCA.set({
           listid: sourceListid,
@@ -103,7 +105,7 @@ export const useLists = () => {
         })
       )
 
-      const destinationCardidOrders = listidCardidOrders[destinationListid]
+      const destinationCardidOrders = listCardOrder[destinationListid]
       dispatch(
         LCA.set({
           listid: destinationListid,
@@ -115,7 +117,7 @@ export const useLists = () => {
         })
       )
     }
-  }, [listidCardidOrders, dispatch])
+  }, [listCardOrder, dispatch])
 
   return { lists, onCreateList, onRemoveList, onMoveList, onDragEnd }
 }

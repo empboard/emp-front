@@ -1,6 +1,6 @@
 import { useCallback, useMemo, type FC } from 'react'
 import { useCards } from '../../hooks'
-import type { List } from '../../store/types'
+import type { List } from '../../store/global/types'
 import {
   Card,
   CardDroppable,

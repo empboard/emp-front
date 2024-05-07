@@ -1,17 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit'
 import * as T from './types'
 
-const initialState: T.ListEntitiesState = {}
+export type ListEntitiesState = Record<string, T.List>
+
+export type AddListAction = {
+  payload: T.List
+}
+
+export type RemoveListAction = {
+  payload: string
+}
+
+const initialState: ListEntitiesState = {}
 
 const ListEntitySlice = createSlice({
   name: '@listEntity',
   initialState,
   reducers: {
-    add(state: T.ListEntitiesState, action: T.AddListAction) {
+    add(state: ListEntitiesState, action: AddListAction) {
       state[action.payload.uuid] = action.payload
     },
 
-    remove(state: T.ListEntitiesState, action: T.RemoveListAction) {
+    remove(state: ListEntitiesState, action: RemoveListAction) {
       delete state[action.payload]
     },
   },
@@ -19,4 +29,3 @@ const ListEntitySlice = createSlice({
 
 export const listEntityAction = ListEntitySlice.actions
 export const listEntityReducer = ListEntitySlice.reducer
-export * from './types'

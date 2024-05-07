@@ -16,7 +16,14 @@ const Hero = () => {
           </div>
         </div>
       </Div>
-      <Div src="" className="w-full ml-4" minHeight="20rem" height="20rem" />
+      <Div
+        src=""
+        className="w-full ml-4 border-2"
+        minHeight="20rem"
+        height="20rem"
+        minWidth="50rem"
+        width="50rem"
+      />
     </div>
   )
 }
