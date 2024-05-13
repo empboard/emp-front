@@ -38,19 +38,19 @@ export const ModalContent: FC<ModalContentProps> = ({
     return <Div {...props} className={className} children={children} />
   }
 
-  const closeBtnClassName =
-    _closeBtnClassName ?? 'btn-primary btn-outline btn-sm'
+  const closeBtnClassName = [
+    _closeBtnClassName,
+    'btn-primary btn-outline btn-sm',
+  ].join(' ')
 
   return (
-    <Div {...props} className={className}>
-      <Div className="absolute" right="0.5rem" top="0.5rem">
-        <Button
-          name="close"
-          className={closeBtnClassName}
-          onClick={onCloseBtnClick}
-        />
-        {children}
-      </Div>
+    <Div {...props} className={className} minWidth="500px" minHeight="300px">
+      <Button
+        name="close"
+        className={closeBtnClassName}
+        onClick={onCloseBtnClick}
+      />
+      {children}
     </Div>
   )
 }

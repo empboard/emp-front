@@ -38,6 +38,7 @@ export const createAsyncSlice = <T, ThunkArg, ThunkConfig extends { state: T }>(
           state.isLoading = false
           state.isError = false
           state.isSuccess = true
+          state.errorMessage = null
         })
         .addCase(asyncThunk.rejected, (state, _) => {
           state.isLoading = false

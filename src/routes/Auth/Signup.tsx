@@ -23,7 +23,9 @@ const Signup = () => {
   )
 
   const navigate = useNavigate()
+
   const { signup } = useAuth()
+
   const createAccount = useCallback(() => {
     if (password === confirmPassword && password !== '') {
       signup(email, password, () => navigate('/'))
